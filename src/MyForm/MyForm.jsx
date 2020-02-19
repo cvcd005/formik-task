@@ -8,7 +8,7 @@ import MyCheckbox from './MyCheckbox';
 const MyForm = (props) => {
 
     return (
-      <Col className="text-input" xs={20} sm={20} lg={{span:12, offset:6 }}>
+      <Col className="text-input" xs={20} sm={16}>
         <Form onSubmit={props.handleSubmit} className="MyForm">
         
         <MyTextInput
@@ -60,14 +60,14 @@ const MyForm = (props) => {
                 return (
                 <>
                 {'Skills'}
-                <div className="skills">
+                <div className="skillsWrapper">
                   
-                  <button type="button" style={{width:'50%'}} onClick={() => array[array.length - 1].length > 0  ? arrayHelpers.push('') : 0   }>     
+                  <Button className="btn-add" htmlType="button" type="button" onClick={() => array[array.length - 1].length > 0  ? arrayHelpers.push('') : 0   }>     
                     Add a Skill
-                  </button>  
+                  </Button>  
                   {array.map((friend, index) => (
-                    <div key={index}>
-                      <Field name={`Skills.${index}`} disabled={index === (array.length - 1) ? false: true} /> 
+                    <div key={index} style={{marginRight: '20px'}}>
+                      <Field className="skill" name={`Skills.${index}`} disabled={index === (array.length - 1) ? false: true} /> 
                       {index === (array.length - 1) ? null : <Button shape="circle" size="small" htmlType="button" onClick={() => arrayHelpers.remove(index) }>                
                       x
                       </Button>}
@@ -86,7 +86,7 @@ const MyForm = (props) => {
               I accept the terms and conditions
             </MyCheckbox>
            
-                    <button type="submit">Submit</button>
+                    <Button type="submit" htmlType="submit" >Submit</Button>
                  
       </Form>
     </Col>

@@ -1,5 +1,12 @@
 @import-normalize;
 
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
 .contentWrapper {
   margin: 50px auto 0;
   max-width: 1024px;
@@ -18,12 +25,29 @@
   color:tomato;
   margin-bottom: 5px;
 }
-.skills {
-  display:flex;
-  flex-wrap:wrap;
-  padding-top:10px;
+.skillsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 10px;
   margin-bottom: 20px;
+  width: 100%;
+}
+.skill {
+  width: 256px;
+  height: 32px;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
 }
 .checkbox {
+  margin-bottom: 20px;
+}
+.btn-add {
+  margin-right: 20px;
   margin-bottom: 10px;
 }
