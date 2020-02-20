@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const ContentWrapper = props => {
   const { children } = props;
@@ -6,3 +7,7 @@ const ContentWrapper = props => {
 };
 
 export default ContentWrapper;
+
+ContentWrapper.propTypes = {
+  children: PropTypes.element.isRequired,
+};

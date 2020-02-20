@@ -1,8 +1,8 @@
 import React from 'react';
-
 import { Col, Button } from 'antd';
 import * as Yup from 'yup';
 import { Formik, Form, FieldArray, Field, ErrorMessage } from 'formik';
+import PropTypes from 'prop-types';
 
 import submit from '../Api/Api';
 
@@ -10,7 +10,7 @@ import MyTextInput from './MyTextInput';
 import MyCheckbox from './MyCheckbox';
 import Spinner from '../Spinner';
 
-const MyNewForm = () => (
+const MyForm = () => (
   <Formik
     initialValues={{
       name: '',
@@ -137,4 +137,4 @@ const MyNewForm = () => (
   </Formik>
 );
 
-export default MyNewForm;
+export default MyForm;
