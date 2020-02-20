@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "64172424335bf9ddac4348c9914a5a91",
+    "revision": "fd58c14945ec3576eb834e27d359b065",
     "url": "/formik-task/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/formik-task/static/css/2.5bc4965f.chunk.css"
   },
   {
-    "revision": "c01944e69df2be44260c",
+    "revision": "d8cbf91d3f9e26c13569",
     "url": "/formik-task/static/css/main.4b53b066.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/formik-task/static/js/2.9590a3ce.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "c01944e69df2be44260c",
-    "url": "/formik-task/static/js/main.f1639aa5.chunk.js"
+    "revision": "d8cbf91d3f9e26c13569",
+    "url": "/formik-task/static/js/main.a9fe1a46.chunk.js"
   },
   {
     "revision": "b4a3ecea729c1e0a0172",
