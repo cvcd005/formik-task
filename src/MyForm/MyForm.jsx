@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form,  FieldArray, Field } from 'formik';
+import { Form,  FieldArray, Field, ErrorMessage } from 'formik';
 import { Col,  Button} from 'antd';
 
 import MyTextInput from './MyTextInput';
@@ -13,47 +13,48 @@ const MyForm = (props) => {
         
         <MyTextInput
           label="Name"
-          name="Name"
+          name="name"
           type="text"
           placeholder="Vasay"
         />
         <MyTextInput
           label="Password"
-          name="Password"
+          name="password"
           type="password"
           placeholder="password"
         />
         <MyTextInput
           label="Password Confirmation"
-          name="PasswordConfirmation"
+          name="passwordConfirmation"
           type="password"
           placeholder="confirm password"
         />
             <MyTextInput
               label="Email Address"
-              name="Email"
+              name="email"
               type="email"
               placeholder="jane@formik.com"
             />
+            <ErrorMessage name="Email">{123}</ErrorMessage>
              <MyTextInput
               label="Website"
-              name="Website"
+              name="website"
               type="url"
               placeholder="http://www.site.com"
             />
             <MyTextInput
               label="Age"
-              name="Age"
+              name="age"
               type="number"
               min={0}
             />
     
-        {console.log(props.values)}
+        
         <FieldArray
          
-          name="Skills"
+          name="skills"
           render={arrayHelpers => { 
-                const array = props.values.Skills;
+                const array = props.values.skills;
                 if (array.length === 0) {
                   array.push('');
                 }
@@ -67,7 +68,7 @@ const MyForm = (props) => {
                   </Button>  
                   {array.map((friend, index) => (
                     <div key={index} style={{marginRight: '20px'}}>
-                      <Field className="skill" name={`Skills.${index}`} disabled={index === (array.length - 1) ? false: true} /> 
+                      <Field className="skill" name={`skills.${index}`} disabled={index === (array.length - 1) ? false: true} /> 
                       {index === (array.length - 1) ? null : <Button shape="circle" size="small" htmlType="button" onClick={() => arrayHelpers.remove(index) }>                
                       x
                       </Button>}
@@ -82,7 +83,7 @@ const MyForm = (props) => {
                 }
               }
             />
-        <MyCheckbox name="AcceptedTerms">
+        <MyCheckbox name="acceptedTerms">
               I accept the terms and conditions
             </MyCheckbox>
            
