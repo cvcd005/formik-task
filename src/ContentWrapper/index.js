@@ -1,2 +1,3 @@
-import ContentWrapper from './ContentWrapper';
+import ContentWrapper from "./ContentWrapper";
+
 export default ContentWrapper;

@@ -1,2 +1,3 @@
-import MyForm from './MyForm';
+import MyForm from "./MyForm";
+
 export default MyForm;
