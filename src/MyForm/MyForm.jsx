@@ -4,11 +4,26 @@ import * as Yup from 'yup';
 import { Formik, Form, FieldArray, Field, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 
-import submit from '../Api/Api';
+import signUp from '../Api/Api';
 
 import MyTextInput from './MyTextInput';
 import MyCheckbox from './MyCheckbox';
 import Spinner from '../Spinner';
+
+const SubmitForm = async (values, { setSubmitting, resetForm, setFieldError }) => {
+  try {
+    await signUp(values);
+    resetForm();
+    setSubmitting(false);
+  } catch (error) {
+    if (error.response) {
+      setFieldError("email", "User with same email is already exist");
+    } else {
+      resetForm();
+      setSubmitting(false);
+    }
+  }
+};
 
 const MyForm = () => (
   <Formik
@@ -49,7 +64,7 @@ const MyForm = () => (
         .required('Required')
         .oneOf([true], 'You must accept the terms and conditions.'),
     })}
-    onSubmit={submit}
+    onSubmit={SubmitForm}
   >
     {props => {
       if (props.isSubmitting) {

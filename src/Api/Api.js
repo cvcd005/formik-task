@@ -1,23 +1,12 @@
 import axios from "axios";
 
-const sendForm = async user => {
-  const response = await axios.post("http://localhost:5000/sign-up", user);
-  return response;
+const API_URLS = {
+  BASE_URl: "http://localhost:8080",
+  REGISTER_USER: "sign-up"
 };
 
-const submit = async (values, { setSubmitting, resetForm, setFieldError }) => {
-  try {
-    await sendForm(values);
-    resetForm();
-    setSubmitting(false);
-  } catch (error) {
-    if (error.response) {
-      setFieldError("email", "User with same email is already exist");
-    } else {
-      resetForm();
-      setSubmitting(false);
-    }
-  }
+const signUp = async user => {
+  return axios.post(`${API_URLS.BASE_URl}/${API_URLS.REGISTER_USER}`, user);
 };
 
-export default submit;
+export default signUp;
