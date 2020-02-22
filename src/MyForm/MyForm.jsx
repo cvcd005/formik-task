@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Button } from 'antd';
+import { Col, Button, Spin } from 'antd';
 import * as Yup from 'yup';
 import { Formik, Form, FieldArray, Field, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
@@ -8,7 +8,6 @@ import signUp from '../Api/Api';
 
 import MyTextInput from './MyTextInput';
 import MyCheckbox from './MyCheckbox';
-import Spinner from '../Spinner';
 
 const SubmitForm = async (values, { setSubmitting, resetForm, setFieldError }) => {
   try {
@@ -17,7 +16,7 @@ const SubmitForm = async (values, { setSubmitting, resetForm, setFieldError }) =
     setSubmitting(false);
   } catch (error) {
     if (error.response) {
-      setFieldError("email", "User with same email is already exist");
+      setFieldError('email', 'User with same email is already exist');
     } else {
       resetForm();
       setSubmitting(false);
@@ -42,11 +41,11 @@ const MyForm = () => (
         .max(50, 'Must 50 characters or less')
         .required('You must enter Name'),
       password: Yup.string()
+
         .min(8, 'Password is too short - should be 8 chars minimum.')
         .max(40, 'Must be 40 characters or less')
         .matches(/[0-9]+/, 'Password must contain at least one digit')
         .matches(/[A-Z]+/, 'Password must contain an one uppercase character')
-        .matches(/^[a-zA-Z0-9]{8,}$/, 'Password have only latin letters and digits')
         .required('You must enter password'),
       passwordConfirmation: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
@@ -67,9 +66,6 @@ const MyForm = () => (
     onSubmit={SubmitForm}
   >
     {props => {
-      if (props.isSubmitting) {
-        return <Spinner />;
-      }
       return (
         <Col className="text-input" xs={20} sm={16}>
           <Form onSubmit={props.handleSubmit} className="MyForm">
@@ -116,7 +112,8 @@ const MyForm = () => (
                       >
                         Add a Skill
                       </Button>
-                      {array.map((friend, index) => (
+                      {array
+                        .map((friend, index) => (
                           <div key={index} style={{ marginRight: '20px' }}>
                             <Field
                               className="skill"
@@ -142,9 +139,15 @@ const MyForm = () => (
               }}
             />
             <MyCheckbox name="acceptedTerms">I accept the terms and conditions</MyCheckbox>
-            <Button type="submit" htmlType="submit">
-              Submit
-            </Button>
+            <div className="send-div">
+              {props.isSubmitting ? (
+                <Spin />
+              ) : (
+                <Button type="primary" size="large" htmlType="submit">
+                  Submit
+                </Button>
+              )}
+            </div>
           </Form>
         </Col>
       );

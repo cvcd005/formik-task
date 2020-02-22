@@ -7,9 +7,9 @@ const port = process.env.PORT || 8080;
 
 const bd = [];
 
-const checkUser = obj => {
-  const result = bd.filter(user => user.email === obj.email);
-  return result.length === 0;
+const isUserExist = obj => {
+  const result = bd.find(user => user.email === obj.email);
+  return result;
 };
 
 app.use(cors());
@@ -22,11 +22,11 @@ app.get("/api/hello", (req, res) => {
 
 app.post("/sign-up", (req, res) => {
   const { acceptedTerms, ...user } = req.body;
-  if (checkUser(user)) {
+  if (isUserExist(user)) {
+    res.status(400).send("YOU BAAD");
+  } else {
     bd.push(user);
     res.send("YOU COOL");
-  } else {
-    res.status(400).send("YOU BAAD");
   }
 
   // eslint-disable-next-line no-console
