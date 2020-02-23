@@ -1,6 +1,5 @@
 import React from 'react';
-import { Col, Button, Spin, Input } from 'antd';
-import * as Yup from 'yup';
+import { Col, Button, Spin } from 'antd';
 import { Formik, Form, FieldArray, Field, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 
@@ -9,13 +8,15 @@ import signUp from '../Api/Api';
 import MyTextInput from './MyTextInput';
 import MyCheckbox from './MyCheckbox';
 
+const Schema = require('../Api/ValidSchema'); //такой импорт так как нужен для импорта старой ноды
+
 const SubmitForm = async (values, { setSubmitting, resetForm, setFieldError }) => {
   try {
     await signUp(values);
     resetForm();
     setSubmitting(false);
   } catch (error) {
-    if (error.response) {
+    if (error.response.data === 'USER_EXIST') {
       setFieldError('email', 'User with same email is already exist');
     } else {
       resetForm();
@@ -37,38 +38,13 @@ const MyForm = () => (
       skills: [],
       acceptedTerms: false, // added for our checkbox
     }}
-    validationSchema={Yup.object({
-      name: Yup.string()
-        .max(50, 'Must 50 characters or less')
-        .required('You must enter Name'),
-      password: Yup.string()
-        .matches(/^[a-zA-Z0-9]{0,}$/, 'Password have only latin letters and digits')
-        .min(8, 'Password is too short - should be 8 chars minimum.')
-        .max(40, 'Must be 40 characters or less')
-        .matches(/[0-9]+/, 'Password must contain at least one digit')
-        .matches(/[A-Z]+/, 'Password must contain an one uppercase character')
-        .required('You must enter password'),
-      passwordConfirmation: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match')
-        .required('You must confirm password'),
-      email: Yup.string()
-        .email('Invalid email address')
-        .required('You must enter email'),
-      website: Yup.string().url('Mustbe a valid url'),
-      age: Yup.number('Must be an integer')
-        .min(18, 'Must be in range of 18 and 65')
-        .max(65, 'Must be in range of 18 and 65')
-        .required('You must enter your age'),
-      skills: Yup.array().of(Yup.string()),
-      acceptedTerms: Yup.boolean()
-        .required('Required')
-        .oneOf([true], 'You must accept the terms and conditions.'),
-    })}
+    validationSchema={Schema.validSchema}
     onSubmit={SubmitForm}
   >
     {props => {
       return (
         <Col className="text-input" xs={20} sm={16}>
+          <div name="register"></div>
           <Form onSubmit={props.handleSubmit}
             className="MyForm">
             <MyTextInput label="Name" name="name" type="text" placeholder="Vasay" />
@@ -158,7 +134,7 @@ const MyForm = () => (
               {props.isSubmitting ? (
                 <Spin />
               ) : (
-                <Button type="primary" size="large" htmlType="submit" >
+                <Button type="primary" size="large" htmlType="submit">
                   Submit
                 </Button>
               )}
