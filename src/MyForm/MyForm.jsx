@@ -16,7 +16,7 @@ const SubmitForm = async (values, { setSubmitting, resetForm, setFieldError }) =
     resetForm();
     setSubmitting(false);
   } catch (error) {
-    if (error.response.data === 'USER_EXIST') {
+    if (error.response && error.response.data === 'USER_EXIST') {
       setFieldError('email', 'User with same email is already exist');
     } else {
       resetForm();
