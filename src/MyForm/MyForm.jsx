@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Button, Spin } from 'antd';
+import { Col, Button, Spin, Input } from 'antd';
 import * as Yup from 'yup';
 import { Formik, Form, FieldArray, Field, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
@@ -33,6 +33,7 @@ const MyForm = () => (
       email: '',
       website: '',
       age: 0,
+      currentSkill: '',
       skills: [],
       acceptedTerms: false, // added for our checkbox
     }}
@@ -41,7 +42,7 @@ const MyForm = () => (
         .max(50, 'Must 50 characters or less')
         .required('You must enter Name'),
       password: Yup.string()
-
+        .matches(/^[a-zA-Z0-9]{0,}$/, 'Password have only latin letters and digits')
         .min(8, 'Password is too short - should be 8 chars minimum.')
         .max(40, 'Must be 40 characters or less')
         .matches(/[0-9]+/, 'Password must contain at least one digit')
@@ -68,7 +69,8 @@ const MyForm = () => (
     {props => {
       return (
         <Col className="text-input" xs={20} sm={16}>
-          <Form onSubmit={props.handleSubmit} className="MyForm">
+          <Form onSubmit={props.handleSubmit}
+            className="MyForm">
             <MyTextInput label="Name" name="name" type="text" placeholder="Vasay" />
             <MyTextInput label="Password" name="password" type="password" placeholder="password" />
             <MyTextInput
@@ -91,48 +93,61 @@ const MyForm = () => (
               placeholder="http://www.site.com"
             />
             <MyTextInput label="Age" name="age" type="number" min={0} />
+      
             <FieldArray
               name="skills"
               render={arrayHelpers => {
                 const array = props.values.skills;
-                if (array.length === 0) {
-                  array.push('');
-                }
+               
                 return (
                   <>
                     Skills
-                    <div className="skillsWrapper">
+                    <div>
+                     
+                      <Field
+                        name="currentSkill"
+                        onKeyPress={evt => {
+                          if (evt.key === "Enter") {
+                            evt.preventDefault();
+                            if (props.values.currentSkill.length > 0 ) {
+                              arrayHelpers.push(props.values.currentSkill);
+                              props.setFieldValue('currentSkill', '');
+                            }
+                          }
+                        }}
+                        className="inputSkill"
+                      />
                       <Button
                         className="btn-add"
                         htmlType="button"
                         type="button"
-                        onClick={() =>
-                          array[array.length - 1].length > 0 ? arrayHelpers.push('') : 0
-                        }
+                        onClick={() => {
+                          if (props.values.currentSkill.length > 0) {
+                            arrayHelpers.push(props.values.currentSkill);
+                            props.setFieldValue('currentSkill', '');
+                          }
+                        }}
                       >
                         Add a Skill
                       </Button>
+                      <div className="skillsWrapper">
                       {array
                         .map((friend, index) => (
                           <div key={index} style={{ marginRight: '20px' }}>
-                            <Field
-                              className="skill"
-                              name={`skills.${index}`}
-                              disabled={index !== array.length - 1}
-                            />
-                            {index === array.length - 1 ? null : (
+                            <div className="skill">
+                              {friend }  
                               <Button
                                 shape="circle"
                                 size="small"
                                 htmlType="button"
                                 onClick={() => arrayHelpers.remove(index)}
                               >
-                                x
-                              </Button>
-                            )}
+                              x
+                              </Button>                      
+                            </div>
                           </div>
-                        ))
-                        .reverse()}
+                        ))}
+                      </div>
                     </div>
                   </>
                 );
@@ -143,7 +158,7 @@ const MyForm = () => (
               {props.isSubmitting ? (
                 <Spin />
               ) : (
-                <Button type="primary" size="large" htmlType="submit">
+                <Button type="primary" size="large" htmlType="submit" >
                   Submit
                 </Button>
               )}

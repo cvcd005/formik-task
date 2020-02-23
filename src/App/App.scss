@@ -6,7 +6,6 @@ html {
 *, *::before, *::after {
   box-sizing: inherit;
 }
-
 .contentWrapper {
   margin: 50px auto 0;
   max-width: 1024px;
@@ -33,26 +32,29 @@ html {
   width: 100%;
 }
 .skill {
-  width: 256px;
-  height: 32px;
+  min-height: 32px;
   padding: 4px 11px;
   color: rgba(0, 0, 0, 0.65);
   font-size: 14px;
   line-height: 1.5;
   background-color: #fff;
-  background-image: none;
+}
+.inputSkill {
+  line-height: 1.5;
+  background-color: #fff;
   border: 1px solid #d9d9d9;
   border-radius: 4px;
+  width: 50%;
+  height: 32px;
+  margin-right: 10px;
 }
 .checkbox {
   margin-bottom: 20px;
 }
 .btn-add {
-  margin-right: 20px;
-  margin-bottom: 10px;
+  height:32px;
 }
 .send-div {
-  
   display:flex;
   justify-content:center;
 }
